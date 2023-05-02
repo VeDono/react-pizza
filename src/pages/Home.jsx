@@ -144,13 +144,12 @@ const Home = () => {
 
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
-        {/* {pizzas.map((obj) => (
-                <PizzaBlock key={obj.id} {...obj} />
-              ))} */}
-
         {isLoading ? skeleton : pizzas}
 
-        {/* <PizzaBlock
+        {/* {pizzas.map((obj) => (
+                <PizzaBlock key={obj.id} {...obj} />
+              ))}
+        <PizzaBlock
                 url="https://is.gd/Tzz8Hc"
                 price="300"
                 title="Unter-пицца"

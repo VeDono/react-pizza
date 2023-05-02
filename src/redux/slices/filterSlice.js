@@ -4,10 +4,10 @@ const initialState = {
   categoryId: 0,
   currentPage: 1,
   selectedSort: {
-    name: 'популярности ☝',
+    name: 'популярности 👇',
     sortProperty: 'rating',
-    order: 'asc',
-    sortType: 'rating-asc',
+    order: 'desc',
+    sortType: 'rating-desc',
   },
 }
 

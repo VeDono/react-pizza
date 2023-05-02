@@ -42,6 +42,7 @@ function Sort() {
   const dispatch = useDispatch()
   const sortRef = useRef()
 
+  // Закрытие pop-up по нажатию на область вне sort
   useEffect(() => {
     const handleOutsideClick = (event) => {
       if (!event.composedPath().includes(sortRef.current)) {
