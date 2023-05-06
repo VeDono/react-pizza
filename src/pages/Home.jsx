@@ -1,5 +1,4 @@
 import qs from 'qs'
-import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import React, { useContext, useEffect, useRef, useState } from 'react'
@@ -7,7 +6,12 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 
 import { SearchContext } from '../App'
 import { listItems } from '../components/Sort'
-import { setCategoryId, setFilters } from '../redux/slices/filterSlice'
+import {
+  setCategoryId,
+  setFilters,
+  selectFilter,
+} from '../redux/slices/filterSlice'
+import { fetchPizzas, selectPizzaData } from '../redux/slices/pizzaSlice'
 // In project imports
 
 import Sort from '../components/Sort'
@@ -20,18 +24,16 @@ import Skeleton from '../components/PizzaBlock/Skeleton'
 const Home = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const [pizzasMockapi, setPizzasMockapi] = useState([])
-  const [isLoading, setIsLoading] = useState(true)
   const isSearch = useRef(false)
   const isMounted = useRef(false)
   const urlRef = useRef(window.location.search)
-  const { searchValue } = useContext(SearchContext)
   // const [currentPage, setCurrentPage] = useState(1)
   // const [categoryId, setCategoryId] = useState(0)
   // Сохранено поскольку это учебный проект и это пример реализации через State
-  const { categoryId, selectedSort, currentPage } = useSelector(
-    (state) => state.filter
-  )
+  const { items, status } = useSelector(selectPizzaData)
+  const { categoryId, selectedSort, currentPage, searchValue } =
+    useSelector(selectFilter)
+
   // const [selectedSort, setSelectedSort] = useState({
   //   name: 'популярности ☝',
   //   sortProperty: 'rating',
@@ -41,42 +43,26 @@ const Home = () => {
   // Сохранено поскольку это учебный проект и это пример реализации через State
 
   // Передает категории в Redux при изменении сортировки по категории
-
   const onChangeCategory = (id) => {
     dispatch(setCategoryId(id))
   }
 
   // Fetch (Axios) запрос
-  const fetchPizzas = async () => {
-    setIsLoading(true)
-
+  const getPizzas = async () => {
     const categoryRequest = categoryId > 0 ? `category=${categoryId}` : ''
     const sortRequest = selectedSort.sortProperty
     const orderRequest = !selectedSort.order ? `desc` : `${selectedSort.order}`
     const searchRequest = searchValue ? `&search=${searchValue}` : ''
 
-    // fetch(
-    //   `https://6437e97ec1565cdd4d6122a5.mockapi.io/items?page=${currentPage}&limit=4&${categoryRequest}&sortBy=${sortRequest}&order=${orderRequest}${searchRequest}`
-    // )
-    //   .then((response) => response.json())
-    //   .then((json) => {
-    //     setPizzasMockapi(json)
-    //   })
-    //   .catch((error) => {
-    //     alert('Не удалось загрузить данные 😥')
-    //     console.error(error)
-    //   })
-    //   .finally(() => setIsLoading(false))
-    axios
-      .get(
-        `https://6437e97ec1565cdd4d6122a5.mockapi.io/items?page=${currentPage}&limit=4&${categoryRequest}&sortBy=${sortRequest}&order=${orderRequest}${searchRequest}`
-      )
-      .then((response) => setPizzasMockapi(response.data))
-      .catch((error) => {
-        alert('Не удалось загрузить данные 😥')
-        console.error(error)
+    dispatch(
+      fetchPizzas({
+        categoryRequest,
+        sortRequest,
+        orderRequest,
+        searchRequest,
+        currentPage,
       })
-      .finally(() => setIsLoading(false))
+    )
     window.scrollTo(0, 0)
   }
 
@@ -120,7 +106,7 @@ const Home = () => {
     window.scrollTo(0, 0)
 
     if (!isSearch.current) {
-      fetchPizzas()
+      getPizzas()
     }
 
     isSearch.current = false
@@ -128,9 +114,7 @@ const Home = () => {
 
   // Создание заготовки блоков при загрузке данных, если данные получены, то пиццы
   const skeleton = [...new Array(4)].map((_, index) => <Skeleton key={index} />)
-  const pizzas = pizzasMockapi.map((obj) => (
-    <PizzaBlock key={obj.id} {...obj} />
-  ))
+  const pizzas = items.map((obj) => <PizzaBlock key={obj.id} {...obj} />)
 
   return (
     <div className="container">
@@ -143,10 +127,19 @@ const Home = () => {
       </div>
 
       <h2 className="content__title">Все пиццы</h2>
-      <div className="content__items">
-        {isLoading ? skeleton : pizzas}
+      {status === 'error' ? (
+        <div className="content__error-info">
+          <h2>Произошла ошибка 😕</h2>
+          <p>
+            К сожалению, не удалось получить питсы. Попробуйте повторить попытку
+            позже.
+          </p>
+        </div>
+      ) : (
+        <div className="content__items">
+          {status === 'loading' ? skeleton : pizzas}
 
-        {/* {pizzas.map((obj) => (
+          {/* {pizzas.map((obj) => (
                 <PizzaBlock key={obj.id} {...obj} />
               ))}
         <PizzaBlock
@@ -154,7 +147,9 @@ const Home = () => {
                 price="300"
                 title="Unter-пицца"
               /> */}
-      </div>
+        </div>
+      )}
+
       <Pagination />
     </div>
   )

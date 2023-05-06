@@ -9,9 +9,7 @@ const doughTypes = ['тонкое', 'традиционное']
 function PizzaBlock({ id, imageUrl, price, title, sizes, types }) {
   const dispatch = useDispatch()
   const uid = uuidv4()
-  const cartCount = useSelector((state) =>
-    state.cart.items.find((obj) => obj.id === id)
-  )
+
   const [activeDough, setActiveDough] = useState(0)
   const [activeSize, setActiveSize] = useState(0)
 
