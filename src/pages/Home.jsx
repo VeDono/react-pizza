@@ -1,10 +1,9 @@
 import qs from 'qs'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
 // Outside imports
 
-import { SearchContext } from '../App'
 import { listItems } from '../components/Sort'
 import {
   setCategoryId,

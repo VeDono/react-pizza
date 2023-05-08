@@ -1,5 +1,12 @@
 @import '../variables';
 
+.pizza-loadingPage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 250px;
+}
+
 .pizza-block {
   width: 280px;
   text-align: center;
@@ -17,8 +24,17 @@
     // margin-right: 35px;
   }
 
+  &__more {
+    &:hover {
+      .pizza-block__image {
+        transform: scale(1.08);
+      }
+    }
+  }
+
   &__image {
     width: 250px;
+    transition: 0.3s ease-in-out;
 
     @media (max-width: 300px) {
       width: 200px;
@@ -30,6 +46,7 @@
     font-weight: 900;
     letter-spacing: 1%;
     margin-bottom: 20px;
+    position: relative;
   }
 
   &__selector {
