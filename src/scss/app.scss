@@ -46,6 +46,19 @@ body {
     }
   }
 
+  // Items in cart
+  &__slots {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    @media (max-width: 745px) {
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
   // Variation with flex
   // &__items {
   //   display: flex;
