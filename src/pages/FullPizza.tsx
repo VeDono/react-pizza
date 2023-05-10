@@ -1,14 +1,19 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { useParams, Link, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 
 import ButtonBack from '../components/ButtonBack'
 
-const FullPizza = () => {
-  const [pizza, setPizza] = useState('')
+const FullPizza: React.FC = () => {
+  const [pizza, setPizza] = useState<{
+    imageUrl: string
+    title: string
+    price: number
+  }>()
   const { id } = useParams()
   const navigate = useNavigate()
 
+  // Получение данных о конкретном лоте.
   useEffect(() => {
     async function fetchPizza() {
       try {
@@ -26,6 +31,7 @@ const FullPizza = () => {
     fetchPizza()
   }, [])
 
+  // Проверка на валидность переменной 'pizza'.
   if (!pizza) {
     return (
       <div className="container">
