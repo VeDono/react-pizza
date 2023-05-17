@@ -3,19 +3,27 @@ import { useDispatch } from 'react-redux'
 
 import { setCurrentPage } from '../redux/slices/filterSlice'
 
-const Categories = ({ categoryId, onChangeCategory }) => {
-  // const [activeCategory, setActiveCategory] = useState(0)
-  const dispatch = useDispatch()
-  const categories = [
-    'Все',
-    'Мясные',
-    'Вегетарианская',
-    'Гриль',
-    'Острые',
-    'Закрытые',
-  ]
+type CategoriesProps = {
+  categoryId: number
+  onChangeCategory: (index: number) => void
+}
 
-  const onClickCategory = (index) => {
+const categories = [
+  'Все',
+  'Мясные',
+  'Вегетарианская',
+  'Гриль',
+  'Острые',
+  'Закрытые',
+]
+
+const Categories: React.FC<CategoriesProps> = ({
+  categoryId,
+  onChangeCategory,
+}) => {
+  const dispatch = useDispatch()
+
+  const onClickCategory = (index: number) => {
     onChangeCategory(index)
     dispatch(setCurrentPage(1))
   }
@@ -26,7 +34,7 @@ const Categories = ({ categoryId, onChangeCategory }) => {
         {categories.map((category, index) => (
           <li
             onClick={() => onClickCategory(index)}
-            className={categoryId == index ? 'active' : ''}
+            className={categoryId === index ? 'active' : ''}
             key={index}
           >
             {category}

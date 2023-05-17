@@ -7,13 +7,13 @@ import SearchIcon from './SearchIcon'
 import ClearIcon from './ClearIcon'
 import styles from './Search.module.scss'
 
-const Search = () => {
+const Search: React.FC = () => {
   const dispatch = useDispatch()
   const [value, setValue] = useState('')
-  const inputRef = useRef()
+  const inputRef = useRef<HTMLInputElement>(null)
 
   const updateSearchValue = useCallback(
-    debounce((str) => {
+    debounce((str: string) => {
       dispatch(setSearchValue(str))
     }, 250),
     []
@@ -23,10 +23,13 @@ const Search = () => {
     setValue('')
     dispatch(setSearchValue(''))
     // document.querySelector('input').focus() //Так делать не стоит, не желательно правилами
-    inputRef.current.focus()
+
+    inputRef.current?.focus()
   }
 
-  const onChangeInput = (event) => {
+  const onChangeInput: React.ChangeEventHandler = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setValue(event.target.value)
     updateSearchValue(event.target.value)
   }

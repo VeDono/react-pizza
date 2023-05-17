@@ -1,11 +1,18 @@
-import React, { useState, useRef } from 'react'
+import { useState, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setSelectedSort } from '../redux/slices/filterSlice'
 import { useEffect } from 'react'
 
 import { selectSort } from '../redux/slices/filterSlice'
 
-export const listItems = [
+type ListItem = {
+  name: string
+  sortProperty: string
+  order: string
+  sortType?: string
+}
+
+export const listItems: ListItem[] = [
   {
     name: 'популярности ☝',
     sortProperty: 'rating',
@@ -33,7 +40,7 @@ export const listItems = [
   {
     name: 'алфавиту',
     sortProperty: 'title',
-    order: 'desc',
+    order: 'asc',
   },
 ]
 
@@ -42,12 +49,12 @@ function Sort() {
   const [isOpened, setIsOpened] = useState(false)
   const selectedSort = useSelector(selectSort)
   const dispatch = useDispatch()
-  const sortRef = useRef()
+  const sortRef = useRef(null)
 
   // Закрытие pop-up по нажатию на область вне sort
   useEffect(() => {
-    const handleOutsideClick = (event) => {
-      if (!event.composedPath().includes(sortRef.current)) {
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (sortRef.current && !event.composedPath().includes(sortRef.current)) {
         setIsOpened(false)
       }
     }

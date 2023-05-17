@@ -1,7 +1,11 @@
 import React from 'react'
 import styles from './Search.module.scss'
 
-const ClearIcon = ({ onClickClear }) => {
+type ClearIconProps = {
+  onClickClear: any
+}
+
+const ClearIcon: React.FC<ClearIconProps> = ({ onClickClear }) => {
   return (
     <svg
       onClick={onClickClear}

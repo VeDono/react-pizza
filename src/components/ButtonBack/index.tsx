@@ -1,10 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const ButtonBack = () => {
+const ButtonBack: React.FC = () => {
   return (
     <Link to="/">
-      <a className="button button--black">Вернуться назад</a>
+      <button className="button button--black">Вернуться назад</button>
     </Link>
   )
 }

@@ -20,7 +20,7 @@ import Pagination from '../components/Pagination'
 import Skeleton from '../components/PizzaBlock/Skeleton'
 // Components import
 
-const Home = () => {
+const Home: React.FC = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const isSearch = useRef(false)
@@ -42,8 +42,8 @@ const Home = () => {
   // Сохранено поскольку это учебный проект и это пример реализации через State
 
   // Передает категории в Redux при изменении сортировки по категории
-  const onChangeCategory = (id) => {
-    dispatch(setCategoryId(id))
+  const onChangeCategory = (idx: number) => {
+    dispatch(setCategoryId(idx))
   }
 
   // Fetch (Axios) запрос
@@ -54,6 +54,7 @@ const Home = () => {
     const searchRequest = searchValue ? `&search=${searchValue}` : ''
 
     dispatch(
+      // @ts-ignore
       fetchPizzas({
         categoryRequest,
         sortRequest,
@@ -113,7 +114,7 @@ const Home = () => {
 
   // Создание заготовки блоков при загрузке данных, если данные получены, то пиццы
   const skeleton = [...new Array(4)].map((_, index) => <Skeleton key={index} />)
-  const pizzas = items.map((obj) => <PizzaBlock key={obj.id} {...obj} />)
+  const pizzas = items.map((obj: any) => <PizzaBlock key={obj.id} {...obj} />)
 
   return (
     <div className="container">
@@ -137,15 +138,6 @@ const Home = () => {
       ) : (
         <div className="content__items">
           {status === 'loading' ? skeleton : pizzas}
-
-          {/* {pizzas.map((obj) => (
-                <PizzaBlock key={obj.id} {...obj} />
-              ))}
-        <PizzaBlock
-                url="https://is.gd/Tzz8Hc"
-                price="300"
-                title="Unter-пицца"
-              /> */}
         </div>
       )}
 

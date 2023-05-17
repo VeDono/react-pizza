@@ -1,22 +1,40 @@
 import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { v4 as uuidv4 } from 'uuid'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 import { addItem } from '../../redux/slices/cartSlice'
 
 const doughTypes = ['тонкое', 'традиционное']
 
-function PizzaBlock({ id, imageUrl, price, title, sizes, types }) {
+type PizzaBlockProps = {
+  id: string
+  imageUrl: string
+  price: number
+  title: string
+  sizes: number[]
+  types: number[]
+}
+
+const PizzaBlock: React.FC<PizzaBlockProps> = ({
+  id,
+  imageUrl,
+  price,
+  title,
+  sizes,
+  types,
+}) => {
   const dispatch = useDispatch()
   const uid = uuidv4()
+  // НО ЛУЧШЕ ИСПОЛЬЗОВАТЬ УЖЕ crypto.randomUUID()
 
   const [activeDough, setActiveDough] = useState(0)
   const [activeSize, setActiveSize] = useState(0)
 
-  const cartItem = useSelector((state) =>
+  // Вернуться для типизации
+  const cartItem = useSelector((state: any) =>
     state.cart.items.find(
-      (obj) =>
+      (obj: any) =>
         obj.id === id &&
         obj.type === doughTypes[activeDough] &&
         obj.size === sizes[activeSize]

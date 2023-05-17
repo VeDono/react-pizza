@@ -2,7 +2,7 @@ import React from 'react'
 
 import styles from './Search.module.scss'
 
-const Icon = () => {
+const Icon: React.FC = () => {
   return (
     <svg
       className={styles.icon}

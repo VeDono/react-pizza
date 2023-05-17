@@ -1,10 +1,9 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import styles from './NotFoundBlock.module.scss'
 
 import ButtonBack from '../components/ButtonBack'
 
-const NotFound = () => {
+const NotFound: React.FC = () => {
   return (
     <div className="container">
       <div className={styles.main}>
