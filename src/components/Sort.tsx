@@ -4,6 +4,7 @@ import { setSelectedSort } from '../redux/slices/filterSlice'
 import { useEffect } from 'react'
 
 import { selectSort } from '../redux/slices/filterSlice'
+import React from 'react'
 
 export type ListItem = {
   name: string
@@ -50,7 +51,7 @@ export const listItems: ListItem[] = [
   },
 ]
 
-function Sort() {
+const Sort: React.FC = React.memo(() => {
   // const [isActive, setIsActive] = useState(0)
   const [isOpened, setIsOpened] = useState(false)
   const selectedSort = useSelector(selectSort)
@@ -122,6 +123,6 @@ function Sort() {
       )} */}
     </>
   )
-}
+})
 
 export default Sort

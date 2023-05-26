@@ -17,32 +17,31 @@ const categories = [
   'Закрытые',
 ]
 
-const Categories: React.FC<CategoriesProps> = ({
-  categoryId,
-  onChangeCategory,
-}) => {
-  const dispatch = useDispatch()
+const Categories: React.FC<CategoriesProps> = React.memo(
+  ({ categoryId, onChangeCategory }) => {
+    const dispatch = useDispatch()
 
-  const onClickCategory = (index: number) => {
-    onChangeCategory(index)
-    dispatch(setCurrentPage(1))
+    const onClickCategory = (index: number) => {
+      onChangeCategory(index)
+      dispatch(setCurrentPage(1))
+    }
+
+    return (
+      <div className="categories">
+        <ul>
+          {categories.map((category, index) => (
+            <li
+              onClick={() => onClickCategory(index)}
+              className={categoryId === index ? 'active' : ''}
+              key={index}
+            >
+              {category}
+            </li>
+          ))}
+        </ul>
+      </div>
+    )
   }
-
-  return (
-    <div className="categories">
-      <ul>
-        {categories.map((category, index) => (
-          <li
-            onClick={() => onClickCategory(index)}
-            className={categoryId === index ? 'active' : ''}
-            key={index}
-          >
-            {category}
-          </li>
-        ))}
-      </ul>
-    </div>
-  )
-}
+)
 
 export default Categories

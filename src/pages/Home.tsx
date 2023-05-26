@@ -43,9 +43,9 @@ const Home: React.FC = () => {
   // Сохранено поскольку это учебный проект и это пример реализации через State
 
   // Передает категории в Redux при изменении сортировки по категории
-  const onChangeCategory = (idx: number) => {
+  const onChangeCategory = React.useCallback((idx: number) => {
     dispatch(setCategoryId(idx))
-  }
+  }, [])
 
   // Fetch (Axios) запрос
   const getPizzas = async () => {
