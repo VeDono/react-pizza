@@ -24,11 +24,21 @@ const CartItem: React.FC<CartItemProps> = ({
   imageUrl,
   size,
 }) => {
+  const cartItemProps = {
+    id,
+    uid,
+    title,
+    type,
+    price,
+    count,
+    imageUrl,
+    size,
+  }
   const dispath = useDispatch()
 
   const onClickRemove = () => {
     if (window.confirm('Вы действительно хотите удалить товар ?')) {
-      dispath(removeItem({ uid, size, type, price }))
+      dispath(removeItem(cartItemProps))
     }
   }
 
@@ -45,7 +55,7 @@ const CartItem: React.FC<CartItemProps> = ({
       </div>
       <div className="cart__item-count">
         <div
-          onClick={() => dispath(countMinus({ id, uid, type, size }))}
+          onClick={() => dispath(countMinus(cartItemProps))}
           className="button button--outline button--circle cart__item-count-minus"
         >
           <svg
@@ -67,7 +77,7 @@ const CartItem: React.FC<CartItemProps> = ({
         </div>
         <b>{count}</b>
         <div
-          onClick={() => dispath(countPlus({ id, uid, type, size }))}
+          onClick={() => dispath(countPlus(cartItemProps))}
           className="button button--outline button--circle cart__item-count-plus"
         >
           <svg

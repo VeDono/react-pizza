@@ -5,11 +5,16 @@ import { useEffect } from 'react'
 
 import { selectSort } from '../redux/slices/filterSlice'
 
-type ListItem = {
+export type ListItem = {
   name: string
   sortProperty: string
   order: string
-  sortType?: string
+  sortType:
+    | 'rating-asc'
+    | 'rating-desc'
+    | 'price-asc'
+    | 'price-desc'
+    | 'title-asc'
 }
 
 export const listItems: ListItem[] = [
@@ -41,6 +46,7 @@ export const listItems: ListItem[] = [
     name: 'алфавиту',
     sortProperty: 'title',
     order: 'asc',
+    sortType: 'title-asc',
   },
 ]
 

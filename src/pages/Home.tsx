@@ -1,6 +1,6 @@
 import qs from 'qs'
 import { useNavigate } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import React, { useEffect, useRef } from 'react'
 // Outside imports
 
@@ -11,6 +11,7 @@ import {
   selectFilter,
 } from '../redux/slices/filterSlice'
 import { fetchPizzas, selectPizzaData } from '../redux/slices/pizzaSlice'
+import { useAppDispatch } from '../redux/store'
 // In project imports
 
 import Sort from '../components/Sort'
@@ -22,7 +23,7 @@ import Skeleton from '../components/PizzaBlock/Skeleton'
 
 const Home: React.FC = () => {
   const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const isSearch = useRef(false)
   const isMounted = useRef(false)
   const urlRef = useRef(window.location.search)
@@ -54,7 +55,6 @@ const Home: React.FC = () => {
     const searchRequest = searchValue ? `&search=${searchValue}` : ''
 
     dispatch(
-      // @ts-ignore
       fetchPizzas({
         categoryRequest,
         sortRequest,
@@ -88,14 +88,24 @@ const Home: React.FC = () => {
   useEffect(() => {
     if (window.location.search) {
       const params = qs.parse(window.location.search.substring(1))
-      const sort = listItems.find((obj) => obj.sortType === params.sortType)
 
-      dispatch(
-        setFilters({
-          ...params,
-          sort,
-        })
+      const selectedSort = listItems.find(
+        (obj) => obj.sortType === params.sortType
       )
+
+      if (selectedSort) {
+        dispatch(
+          setFilters({
+            ...params,
+            selectedSort,
+            // searchValue, categoryId и currentPage передаются из-за требований SortType
+            searchValue,
+            categoryId,
+            currentPage,
+          })
+        )
+      }
+
       isSearch.current = true
     }
   }, [urlRef.current])

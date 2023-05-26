@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
-import { addItem } from '../../redux/slices/cartSlice'
+import { CartItem, addItem } from '../../redux/slices/cartSlice'
 
 const doughTypes = ['тонкое', 'традиционное']
 
@@ -43,7 +43,7 @@ const PizzaBlock: React.FC<PizzaBlockProps> = ({
   const addedCount = cartItem ? cartItem.count : 0
 
   const onClickAdd = () => {
-    const item = {
+    const item: CartItem = {
       id,
       uid,
       title,
@@ -51,6 +51,7 @@ const PizzaBlock: React.FC<PizzaBlockProps> = ({
       imageUrl,
       type: doughTypes[activeDough],
       size: sizes[activeSize],
+      count: 0,
     }
     dispatch(addItem(item))
   }

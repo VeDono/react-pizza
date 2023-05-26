@@ -1,6 +1,26 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { PayloadAction, createSlice } from '@reduxjs/toolkit'
+import { RootState } from '../store'
 
-const initialState = {
+export type CartItem = {
+  id: string
+  uid: string
+  title: string
+  price: number
+  imageUrl: string
+  type: string
+  size: number
+  count: number
+}
+
+// interface является аналогом 'type', но типизирует лишь объект.
+// обычно используют для типизации стейта.
+interface CartSliceState {
+  totalPrice: number
+  totalCount: number
+  items: CartItem[]
+}
+
+const initialState: CartSliceState = {
   totalPrice: 0,
   totalCount: 0,
   items: [],
@@ -17,7 +37,7 @@ const cartSlice = createSlice({
     //   }, 0)
     // },
 
-    addItem(state, action) {
+    addItem(state, action: PayloadAction<CartItem>) {
       const findItem = state.items.find((obj) => {
         return (
           obj.id === action.payload.id &&
@@ -40,7 +60,7 @@ const cartSlice = createSlice({
         return item.count + sum
       }, 0)
     },
-    countPlus(state, action) {
+    countPlus(state, action: PayloadAction<CartItem>) {
       const findItem = state.items.find((obj) => {
         return (
           obj.uid === action.payload.uid &&
@@ -61,7 +81,7 @@ const cartSlice = createSlice({
         return item.count + sum
       }, 0)
     },
-    countMinus(state, action) {
+    countMinus(state, action: PayloadAction<CartItem>) {
       const findItem = state.items.find((obj) => {
         return (
           obj.uid === action.payload.uid &&
@@ -82,7 +102,7 @@ const cartSlice = createSlice({
       //   return obj.price * obj.count - sum
       // }, 0)
     },
-    removeItem(state, action) {
+    removeItem(state, action: PayloadAction<CartItem>) {
       const findItem = state.items.find((obj) => {
         return (
           obj.uid === action.payload.uid &&
@@ -91,7 +111,9 @@ const cartSlice = createSlice({
         )
       })
 
-      state.totalPrice -= findItem.price * findItem.count
+      if (findItem) {
+        state.totalPrice -= findItem.price * findItem.count
+      }
 
       state.items = state.items.filter((obj) => {
         return (
@@ -115,7 +137,7 @@ const cartSlice = createSlice({
   },
 })
 
-export const selectCart = (state) => state.cart
+export const selectCart = (state: RootState) => state.cart
 
 export const { addItem, countPlus, countMinus, removeItem, cleareItems } =
   cartSlice.actions
