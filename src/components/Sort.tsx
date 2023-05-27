@@ -1,9 +1,9 @@
 import { useState, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setSelectedSort } from '../redux/slices/filterSlice'
+import { setSelectedSort } from '../redux/slices/filter/slice'
 import { useEffect } from 'react'
 
-import { selectSort } from '../redux/slices/filterSlice'
+import { selectSort } from '../redux/slices/filter/selectors'
 import React from 'react'
 
 export type ListItem = {

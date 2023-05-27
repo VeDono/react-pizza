@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './NotFoundBlock.module.scss'
 
-import ButtonBack from '../components/ButtonBack'
+import ButtonBack from '../ButtonBack'
 
 const NotFound: React.FC = () => {
   return (

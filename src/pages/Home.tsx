@@ -5,12 +5,10 @@ import React, { useEffect, useRef } from 'react'
 // Outside imports
 
 import { listItems } from '../components/Sort'
-import {
-  setCategoryId,
-  setFilters,
-  selectFilter,
-} from '../redux/slices/filterSlice'
-import { fetchPizzas, selectPizzaData } from '../redux/slices/pizzaSlice'
+import { setCategoryId, setFilters } from '../redux/slices/filter/slice'
+import { selectFilter } from '../redux/slices/filter/selectors'
+import { fetchPizzas } from '../redux/slices/pizza/asyncActions'
+import { selectPizzaData } from '../redux/slices/pizza/selectors'
 import { useAppDispatch } from '../redux/store'
 // In project imports
 

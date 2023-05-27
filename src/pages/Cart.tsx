@@ -4,7 +4,8 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import CartItem from '../components/CartItem'
 import CartEmpty from './CartEmpty'
-import { cleareItems, selectCart } from '../redux/slices/cartSlice'
+import { cleareItems } from '../redux/slices/cart/slice'
+import { selectCart } from '../redux/slices/cart/selectors'
 
 const Cart: React.FC = () => {
   const dispatch = useDispatch()

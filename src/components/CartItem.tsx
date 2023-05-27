@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 
-import { countPlus, countMinus, removeItem } from '../redux/slices/cartSlice'
+import { countPlus, countMinus, removeItem } from '../redux/slices/cart/slice'
 
 type CartItemProps = {
   id: string

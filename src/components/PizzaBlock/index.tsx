@@ -3,7 +3,8 @@ import { v4 as uuidv4 } from 'uuid'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
-import { CartItem, addItem } from '../../redux/slices/cartSlice'
+import { addItem } from '../../redux/slices/cart/slice'
+import { CartItem } from '../../redux/slices/cart/types'
 
 const doughTypes = ['тонкое', 'традиционное']
 
