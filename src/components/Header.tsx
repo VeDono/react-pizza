@@ -10,7 +10,6 @@ const Header: React.FC = () => {
   const { totalPrice, totalCount, items } = useSelector(selectCart)
   const location = useLocation()
   const isMounted = useRef(false)
-  const dispatch = useDispatch()
   // Оставленно для понимания как делать локальный totalCount
   // const totalCount = items.reduce((sum, item) => item.count + sum, 0)
 
