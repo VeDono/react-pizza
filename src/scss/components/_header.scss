@@ -8,6 +8,10 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    @media (max-width: 500px) {
+      flex-direction: column;
+    }
   }
 
   &__logo {
@@ -28,17 +32,31 @@
       text-transform: uppercase;
       font-weight: 800;
 
-      @media (max-width: 330px) {
+      @media (max-width: 580px) {
         display: none;
+      }
+
+      @media (max-width: 580px) {
+        display: block;
       }
     }
 
     p {
       color: #7b7b7b;
 
-      @media (max-width: 635px) {
+      @media (max-width: 832px) {
         display: none;
       }
+    }
+  }
+
+  &__titleBlock {
+    @media (max-width: 1053px) {
+      max-width: 181px;
+    }
+
+    @media (max-width: 805px) {
+      max-width: 80px;
     }
   }
 }

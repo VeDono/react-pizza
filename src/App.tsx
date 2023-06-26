@@ -24,9 +24,11 @@ function App() {
     <div className="App">
       <Suspense
         fallback={
-          <div className="container">
-            <div className="pizza-loadingPage">
-              <h2>Загрузка...</h2>
+          <div className="wrapper">
+            <div className="container">
+              <div className="pizza-loadingPage">
+                <h2>Загрузка...</h2>
+              </div>
             </div>
           </div>
         }
